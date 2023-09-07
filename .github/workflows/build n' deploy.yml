@@ -32,6 +32,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Install dependencies
+        run: pip install -r requirements.txt
       - name: Build
         run: python main.py
       - name: Setup Pages

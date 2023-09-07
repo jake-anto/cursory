@@ -30,10 +30,10 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Build
-        run: python main.py
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Build
+        run: python main.py
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact

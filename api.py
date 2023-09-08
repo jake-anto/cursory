@@ -7,7 +7,7 @@ TODAY = datetime.utcnow().strftime("%Y/%m/%d")
 API_URL = "https://api.wikimedia.org/"
 
 
-def get_featured(lang='en') -> Dict:
+def get_featured(lang="en") -> Dict:
     """Get the featured content for today from the Wikimedia API.
 
     Parameters

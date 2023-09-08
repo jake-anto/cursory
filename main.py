@@ -116,6 +116,7 @@ def build(lang="en") -> None:
                         p(raw(article))
                         try:
                             p(raw(story["links"][0]["extract_html"]))
+                            a("Continue reading...", href=story["links"][0]["content_urls"]["desktop"]["page"])
                         except (KeyError, IndexError):
                             pass
         else:

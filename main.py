@@ -7,7 +7,7 @@ import api
 
 featured = api.get_featured()
 
-doc = dominate.document(title="Cursory")
+doc = dominate.document(title="Cursory", lang="en") # TODO: Change to lang
 
 with doc.head:
     # meta(charset="UTF-8")
@@ -72,7 +72,7 @@ with doc:
                 # Article
                 article = story["story"]
                 article = article.replace(
-                    '"./', '"https://' + api.LANG + ".wikipedia.org/wiki/"
+                    '"./', '"https://' + 'en' + ".wikipedia.org/wiki/" # TODO: Change to lang
                 )
                 p(raw(article))
                 p(raw(story["links"][0]["extract_html"]))

@@ -57,7 +57,7 @@ def build(lang="en") -> None:
                 @media only screen and (max-width: 600px) {
                     .image {
                         float: none;
-                        margin: 0 auto;
+                        margin: 48px auto;
                         display: block;
                         width: auto;
                     }

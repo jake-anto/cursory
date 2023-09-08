@@ -1,19 +1,35 @@
 from datetime import datetime
 
 import dominate
-from dominate.tags import a, div, footer, h1, h2, h4, header, img, link, meta, p, style
+from dominate.tags import (
+    a,
+    div,
+    footer,
+    h1,
+    h2,
+    h4,
+    header,
+    img,
+    link,
+    meta,
+    option,
+    p,
+    select,
+    style,
+)
 from dominate.util import raw
 
 import api
+import languages
 
 
-def build(lang="en"):
+def build(lang="en") -> None:
+    """Build the HTML file for the given language."""
     featured = api.get_featured(lang=lang)
 
     doc = dominate.document(title="Cursory", lang=lang)
 
     with doc.head:
-        # meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         meta(name="charset", content="UTF-8")
         link(
@@ -52,6 +68,17 @@ def build(lang="en"):
     with doc:
         with header():
             h1("Cursory")
+            p("A cursory glance at current events.")
+            # Language selector
+            with select(onchange="location = this.value;"):
+                option("English", value="index.html")
+                for language in languages.LANGS:
+                    option(
+                        languages.LANG_NAMES[language],
+                        value=f"{language}",
+                        selected=language == lang,
+                    )
+
         with div():
             for story in featured["news"]:
                 with div(cls="story"):

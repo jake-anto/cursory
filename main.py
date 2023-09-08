@@ -79,42 +79,45 @@ def build(lang="en") -> None:
                         selected=language == lang,
                     )
 
-        with div():
-            for story in featured["news"]:
-                with div(cls="story"):
-                    # Image
-                    try:
-                        with a(href=story["links"][0]["originalimage"]["source"]):
-                            img(
-                                src=story["links"][0]["thumbnail"]["source"],
-                                cls="image",
-                                alt=f"Image for {story['links'][0]['titles']['normalized']}",
-                            )
-                    except Exception:
-                        pass
+        if featured is not None:
+            with div():
+                for story in featured["news"]:
+                    with div(cls="story"):
+                        # Image
+                        try:
+                            with a(href=story["links"][0]["originalimage"]["source"]):
+                                img(
+                                    src=story["links"][0]["thumbnail"]["source"],
+                                    cls="image",
+                                    alt=f"Image for {story['links'][0]['titles']['normalized']}",
+                                )
+                        except Exception:
+                            pass
 
-                    # Headline
-                    try:
-                        h2(story["links"][0]["titles"]["normalized"])
-                    except IndexError:
-                        pass
+                        # Headline
+                        try:
+                            h2(story["links"][0]["titles"]["normalized"])
+                        except IndexError:
+                            pass
 
-                    # Subtitle
-                    try:
-                        h4(story["links"][0]["description"])
-                    except (KeyError, IndexError):
-                        pass
+                        # Subtitle
+                        try:
+                            h4(story["links"][0]["description"])
+                        except (KeyError, IndexError):
+                            pass
 
-                    # Article
-                    article = story["story"]
-                    article = article.replace(
-                        '"./', '"https://' + lang + ".wikipedia.org/wiki/"
-                    )
-                    p(raw(article))
-                    try:
-                        p(raw(story["links"][0]["extract_html"]))
-                    except (KeyError, IndexError):
-                        pass
+                        # Article
+                        article = story["story"]
+                        article = article.replace(
+                            '"./', '"https://' + lang + ".wikipedia.org/wiki/"
+                        )
+                        p(raw(article))
+                        try:
+                            p(raw(story["links"][0]["extract_html"]))
+                        except (KeyError, IndexError):
+                            pass
+        else:
+            p("There was an error fetching the news. Please try again later.")
 
         with footer():
             a("Source Code", cls="button", href="https://github.com/j-eo/cursory")

@@ -71,13 +71,15 @@ def build(lang="en") -> None:
             p("A cursory glance at current events.")
             # Language selector
             with select(onchange="location = this.value;"):
-                option("English", value="index.html")
+                # English redirects to index.html rather than en.html
+                option("🇺🇸 English", value="/")
                 for language in languages.LANGS:
-                    option(
-                        languages.LANG_NAMES[language],
-                        value=f"{language}",
-                        selected=language == lang,
-                    )
+                    if language != "en":
+                        option(
+                            languages.LANG_NAMES[language],
+                            value=f"{language}",
+                            selected=language == lang,
+                        )
 
         if featured is not None:
             with div():

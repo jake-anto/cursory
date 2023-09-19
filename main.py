@@ -18,7 +18,7 @@ def build(lang="en") -> None:
     with doc.head:
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         meta(name="charset", content="UTF-8")
-        meta(name="description", content="At lightweight and minimalistic open-source app that delivers the most essential news from around the globe in 15+ languages. Powered by Wikipedia.")
+        meta(name="description", content="A lightweight and minimalistic open-source app that delivers the most essential news from around the globe in 15+ languages. Powered by Wikipedia.")
         link(
             rel="stylesheet",
             href="https://cdn.simplecss.org/simple.min.css",

@@ -1,8 +1,10 @@
-import main
-from languages import LANGS
 import os
 import shutil
 
+import main
+from languages import LANGS
+
+# List of static assets
 ASSETS = ["style.css"]
 
 # Clear site directory

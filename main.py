@@ -2,7 +2,7 @@ from datetime import datetime
 
 import dominate
 from dominate.tags import (a, div, footer, h1, h2, h4, header, img, link, meta,
-                           option, p, select, style)
+                           option, p, select)
 from dominate.util import raw
 
 import api
@@ -18,7 +18,7 @@ def build(lang="en") -> None:
     with doc.head:
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         meta(name="charset", content="UTF-8")
-        meta(name="description", content="Cursory: a sleek and speedy app that delivers the most essential news from around the globe in 15+ languages. It's powered by Wikipedia and is open-source.")
+        meta(name="description", content="At lightweight and minimalistic open-source app that delivers the most essential news from around the globe in 15+ languages. Powered by Wikipedia.")
         link(
             rel="stylesheet",
             href="https://cdn.simplecss.org/simple.min.css",

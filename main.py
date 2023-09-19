@@ -1,26 +1,13 @@
 from datetime import datetime
 
 import dominate
-from dominate.tags import (
-    a,
-    div,
-    footer,
-    h1,
-    h2,
-    h4,
-    header,
-    img,
-    link,
-    meta,
-    option,
-    p,
-    select,
-    style,
-)
+from dominate.tags import (a, div, footer, h1, h2, h4, header, img, link, meta,
+                           option, p, select, style)
 from dominate.util import raw
 
 import api
 import languages
+
 
 def build(lang="en") -> None:
     """Build the HTML file for the given language."""
@@ -88,7 +75,8 @@ def build(lang="en") -> None:
                         try:
                             with a(href=story["links"][0]["originalimage"]["source"]):
                                 img(
-                                    src=story["links"][0]["thumbnail"]["source"],
+                                    src=api.optimize_image(
+                                        story["links"][0]["thumbnail"]["source"], lang),
                                     cls="image",
                                     alt=f"Image for {story['links'][0]['titles']['normalized']}",
                                 )
@@ -115,7 +103,8 @@ def build(lang="en") -> None:
                         p(raw(article))
                         try:
                             p(raw(story["links"][0]["extract_html"]))
-                            a("Continue reading...", href=story["links"][0]["content_urls"]["desktop"]["page"])
+                            a("Continue reading...",
+                              href=story["links"][0]["content_urls"]["desktop"]["page"])
                         except (KeyError, IndexError):
                             pass
         else:

@@ -21,7 +21,7 @@ def build(lang="en") -> None:
         meta(name="description", content="A lightweight and minimalistic open-source app that delivers the most essential news from around the globe in 15+ languages. Powered by Wikipedia.")
         link(
             rel="stylesheet",
-            href="https://cdn.simplecss.org/simple.min.css",
+            href="/simple.css",
         )
         link(
             rel="stylesheet",

@@ -1,11 +1,19 @@
 import os
 import shutil
 
+import requests
+
 import main
 from languages import LANGS
 
 # List of static assets
-ASSETS = ["style.css", "about.html", "404.html"]
+ASSETS = ["style.css", "about.html", "404.html", "simple.css"]
+
+# Self-host simple.css
+print("Downloading simple.css")
+response = requests.get("https://cdn.simplecss.org/simple.min.css/")
+with open('simple.css', "w", encoding="utf-8") as file:
+    file.write(response.text)
 
 # Clear site directory
 if os.path.isdir('site'):

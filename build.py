@@ -5,7 +5,7 @@ import main
 from languages import LANGS
 
 # List of static assets
-ASSETS = ["style.css", "about.html"]
+ASSETS = ["style.css", "about.html", "404.html"]
 
 # Clear site directory
 if os.path.isdir('site'):

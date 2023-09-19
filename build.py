@@ -5,7 +5,7 @@ import main
 from languages import LANGS
 
 # List of static assets
-ASSETS = ["style.css"]
+ASSETS = ["style.css", "about.html"]
 
 # Clear site directory
 if os.path.isdir('site'):
@@ -26,7 +26,7 @@ for language in LANGS:
 
 # Copy assets
 for asset in ASSETS:
-    shutil.copyfile(asset, f"site/{asset}")
+    shutil.copy(asset, f"site/{asset}")
 print("Copied static files")
 
 print("Build complete")

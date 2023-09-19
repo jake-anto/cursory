@@ -88,8 +88,9 @@ def build(lang="en") -> None:
             p("There was an error fetching the news. Please try again later.")
 
         with footer():
-            a("Source Code", cls="button", href="https://github.com/jake-anto/cursory")
-            a("About", cls="button")
+            a("Source Code", cls="button",
+              href="https://github.com/jake-anto/cursory")
+            a("About", cls="button", href="/about")
             p(
                 raw(
                     "<b>Text and images from Wikipedia.</b> "

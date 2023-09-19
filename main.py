@@ -76,7 +76,7 @@ def build(lang="en") -> None:
                     if language != "en":
                         option(
                             languages.LANG_NAMES[language],
-                            value=f"{language}",
+                            value=f"/{language}",
                             selected=language == lang,
                         )
 

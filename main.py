@@ -23,33 +23,9 @@ def build(lang="en") -> None:
             rel="stylesheet",
             href="https://cdn.simplecss.org/simple.min.css",
         )
-        style(
-            """
-                h2 {
-                    margin-bottom: 0;
-                }
-
-                h4 {
-                    margin-top: 0;
-                }
-
-                .image {
-                    width: 200px;
-                    max-height: 300px;
-                    float: right;
-                    overflow: hidden;
-                    margin: 10px;
-                }
-
-                @media only screen and (max-width: 600px) {
-                    .image {
-                        float: none;
-                        margin: 48px auto;
-                        display: block;
-                        width: auto;
-                    }
-                }
-            """
+        link(
+            rel="stylesheet",
+            href="/style.css"
         )
 
     with doc:

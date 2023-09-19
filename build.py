@@ -3,6 +3,8 @@ from languages import LANGS
 import os
 import shutil
 
+ASSETS = ["style.css"]
+
 # Clear site directory
 if os.path.isdir('site'):
     print("Clearing site directory")
@@ -19,3 +21,10 @@ for language in LANGS:
         main.build(lang=language)
     except Exception as e:
         print(f"Skipped {language} because Exception: {e}")
+
+# Copy assets
+for asset in ASSETS:
+    shutil.copyfile(asset, f"site/{asset}")
+print("Copied static files")
+
+print("Build complete")

@@ -18,6 +18,7 @@ def build(lang="en") -> None:
     with doc.head:
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         meta(name="charset", content="UTF-8")
+        meta(name="description", content="Cursory: a sleek and speedy app that delivers the most essential news from around the globe in 15+ languages. It's powered by Wikipedia and is open-source.")
         link(
             rel="stylesheet",
             href="https://cdn.simplecss.org/simple.min.css",

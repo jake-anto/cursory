@@ -92,7 +92,7 @@ def build(lang="en") -> None:
                                     cls="image",
                                     alt=f"Image for {story['links'][0]['titles']['normalized']}",
                                 )
-                        except Exception:
+                        except KeyError:
                             pass
 
                         # Headline

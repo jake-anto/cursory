@@ -1,6 +1,15 @@
 import main
 from languages import LANGS
 import os
+import shutil
+
+# Clear site directory
+if os.path.isdir('site'):
+    print("Clearing site directory")
+    try:
+        shutil.rmtree('site')
+    except OSError as e:
+        print(f"Error {e.filename} - {e.filename}.{e.strerror}")
 
 for language in LANGS:
     try:

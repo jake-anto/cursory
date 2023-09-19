@@ -33,7 +33,7 @@ def build(lang="en") -> None:
             h1("Cursory")
             p("A cursory glance at current events.")
             # Language selector
-            with select(onchange="location = this.value;"):
+            with select(onchange="location = this.value;", aria_label="Language"):
                 # English redirects to index.html rather than en.html
                 option("🇺🇸 English", value="/")
                 for language in languages.LANGS:

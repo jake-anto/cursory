@@ -22,7 +22,6 @@ from dominate.util import raw
 import api
 import languages
 
-
 def build(lang="en") -> None:
     """Build the HTML file for the given language."""
     featured = api.get_featured(lang=lang)

@@ -4,7 +4,9 @@ import os
 
 for language in LANGS:
     try:
-        os.makedirs(os.path.dirname(f"{language}/"), exist_ok=True)
+        # Create a directory for language
+        os.makedirs(os.path.dirname(f"site/{language}/"), exist_ok=True)
+        # Build HTML file
         main.build(lang=language)
     except Exception as e:
         print(f"Skipped {language} because Exception: {e}")

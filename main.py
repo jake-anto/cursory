@@ -136,9 +136,9 @@ def build(lang="en") -> None:
     print(f"Building {lang}.html")
 
     if lang == "en":
-        filename = "index.html"
+        filename = "site/index.html"
     else:
-        filename = f"{lang}/index.html"
+        filename = f"site/{lang}/index.html"
 
     # Write the file; use UTF-8
     with open(filename, "w", errors="ignore", encoding="utf-8") as f:

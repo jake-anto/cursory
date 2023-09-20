@@ -6,13 +6,10 @@ import requests
 import main
 from languages import LANGS
 
-# List of static assets
-ASSETS = ["style.css", "about.html", "404.html", "simple.css"]
-
 # Self-host simple.css
 print("Downloading simple.css")
 response = requests.get("https://cdn.simplecss.org/simple.min.css/")
-with open('simple.css', "w", encoding="utf-8") as file:
+with open('assets/simple.css', "w", encoding="utf-8") as file:
     file.write(response.text)
 
 # Clear site directory
@@ -23,6 +20,10 @@ if os.path.isdir('site'):
     except OSError as e:
         print(f"Error {e.filename} - {e.filename}.{e.strerror}")
 
+# Copy assets
+shutil.copytree('assets/', 'site/')
+print("Copied static files")
+
 for language in LANGS:
     try:
         # Create a directory for language
@@ -31,10 +32,5 @@ for language in LANGS:
         main.build(lang=language)
     except Exception as e:
         print(f"Skipped {language} because Exception: {e}")
-
-# Copy assets
-for asset in ASSETS:
-    shutil.copy(asset, f"site/{asset}")
-print("Copied static files")
 
 print("Build complete")

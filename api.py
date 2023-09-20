@@ -46,7 +46,8 @@ def optimize_image(link: str, lang: str) -> str:
     Returns
     -------
     str
-        The link to the optimized image. If the image could not be optimized, the original link is returned.
+        The link to the optimized image. If the image could not be optimized,
+        the original link is returned.
     """
     try:
         file_id = uuid.uuid4().hex

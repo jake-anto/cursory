@@ -50,7 +50,7 @@ def build(lang="en") -> None:
                     with div(cls="story"):
                         # Image
                         try:
-                            with a(href=story["links"][0]["originalimage"]["source"]):
+                            with a(href=api.optimize_image(story["links"][0]["originalimage"]["source"], lang)):
                                 img(
                                     src=api.optimize_image(
                                         story["links"][0]["thumbnail"]["source"], lang),

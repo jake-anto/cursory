@@ -7,6 +7,7 @@ from PIL import Image
 
 TODAY = datetime.utcnow().strftime("%Y/%m/%d")
 API_URL = "https://api.wikimedia.org/"
+HEADERS = {'User-Agent': 'cursory/0.1 (https://github.com/jake-anto/cursory; cursory@itsjake.me)'}
 
 
 def get_featured(lang="en") -> Dict:
@@ -23,7 +24,7 @@ def get_featured(lang="en") -> Dict:
         The featured content for today.
     """
     response = requests.get(
-        API_URL + f"feed/v1/wikipedia/{lang}/featured/{TODAY}")
+        API_URL + f"feed/v1/wikipedia/{lang}/featured/{TODAY}", headers=HEADERS)
     if response.status_code == 200:
         return response.json()
 
@@ -33,7 +34,7 @@ def optimize_image(link, lang):
         id = uuid.uuid4().hex
         filename = f"site/{lang}/{id}.webp"
 
-        image = Image.open(requests.get(link, stream=True).raw)
+        image = Image.open(requests.get(link, stream=True, headers=HEADERS).raw)
         image.save(filename, format="webp")
 
         return f"/{lang}/{id}.webp"

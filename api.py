@@ -1,3 +1,4 @@
+import logging
 import uuid
 from datetime import datetime
 from typing import Dict
@@ -7,7 +8,9 @@ from PIL import Image
 
 TODAY = datetime.utcnow().strftime("%Y/%m/%d")
 API_URL = "https://api.wikimedia.org/"
-HEADERS = {'User-Agent': 'cursory/0.1 (https://github.com/jake-anto/cursory; cursory@itsjake.me)'}
+HEADERS = {
+    "User-Agent": f"CursoryBot/0.0.1 (https://github.com/jake-anto/cursory; cursory@itsjake.me) requests/{requests.__version__}"
+}
 
 
 def get_featured(lang="en") -> Dict:
@@ -24,20 +27,35 @@ def get_featured(lang="en") -> Dict:
         The featured content for today.
     """
     response = requests.get(
-        API_URL + f"feed/v1/wikipedia/{lang}/featured/{TODAY}", headers=HEADERS)
+        API_URL + f"feed/v1/wikipedia/{lang}/featured/{TODAY}", headers=HEADERS
+    )
     if response.status_code == 200:
         return response.json()
 
 
-def optimize_image(link, lang):
+def optimize_image(link: str, lang: str) -> str:
+    """Convert an image to WebP and save it to the site/lang/ directory.
+
+    Parameters
+    ----------
+    link : str
+        The link to the image to optimize.
+    lang : str
+        To determine the directory to save the image to.
+
+    Returns
+    -------
+    str
+        The link to the optimized image. If the image could not be optimized, the original link is returned.
+    """
     try:
-        id = uuid.uuid4().hex
-        filename = f"site/{lang}/{id}.webp"
+        file_id = uuid.uuid4().hex
+        filename = f"site/{lang}/{file_id}.webp"
 
         image = Image.open(requests.get(link, stream=True, headers=HEADERS).raw)
         image.save(filename, format="webp")
 
-        return f"/{lang}/{id}.webp"
+        return f"/{lang}/{file_id}.webp"
     except Exception:
-        print("Could not optimize image")
+        logging.warning("Could not optimize image. Fallback to original link instead.")
         return link

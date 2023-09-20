@@ -1,8 +1,21 @@
 from datetime import datetime
 
 import dominate
-from dominate.tags import (a, div, footer, h1, h2, h4, header, img, link, meta,
-                           option, p, select)
+from dominate.tags import (
+    a,
+    div,
+    footer,
+    h1,
+    h2,
+    h4,
+    header,
+    img,
+    link,
+    meta,
+    option,
+    p,
+    select,
+)
 from dominate.util import raw
 
 import api
@@ -18,15 +31,15 @@ def build(lang="en") -> None:
     with doc.head:
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         meta(name="charset", content="UTF-8")
-        meta(name="description", content="A lightweight and minimalistic open-source app that delivers the most essential news from around the globe in 15+ languages. Powered by Wikipedia.")
+        meta(
+            name="description",
+            content="A lightweight and minimalistic open-source app that delivers the most essential news from around the globe in 15+ languages. Powered by Wikipedia.",
+        )
         link(
             rel="stylesheet",
             href="/simple.css",
         )
-        link(
-            rel="stylesheet",
-            href="/style.css"
-        )
+        link(rel="stylesheet", href="/style.css")
 
     with doc:
         with header():
@@ -50,10 +63,15 @@ def build(lang="en") -> None:
                     with div(cls="story"):
                         # Image
                         try:
-                            with a(href=api.optimize_image(story["links"][0]["originalimage"]["source"], lang)):
+                            with a(
+                                href=api.optimize_image(
+                                    story["links"][0]["originalimage"]["source"], lang
+                                )
+                            ):
                                 img(
                                     src=api.optimize_image(
-                                        story["links"][0]["thumbnail"]["source"], lang),
+                                        story["links"][0]["thumbnail"]["source"], lang
+                                    ),
                                     cls="image",
                                     alt=f"Image for {story['links'][0]['titles']['normalized']}",
                                 )
@@ -80,16 +98,19 @@ def build(lang="en") -> None:
                         p(raw(article))
                         try:
                             p(raw(story["links"][0]["extract_html"]))
-                            a("Continue reading...",
-                              href=story["links"][0]["content_urls"]["desktop"]["page"])
+                            a(
+                                "Continue reading...",
+                                href=story["links"][0]["content_urls"]["desktop"][
+                                    "page"
+                                ],
+                            )
                         except (KeyError, IndexError):
                             pass
         else:
             p("There was an error fetching the news. Please try again later.")
 
         with footer():
-            a("Source Code", cls="button",
-              href="https://github.com/jake-anto/cursory")
+            a("Source Code", cls="button", href="https://github.com/jake-anto/cursory")
             a("About", cls="button", href="/about")
             p(
                 raw(

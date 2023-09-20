@@ -16,7 +16,7 @@ build_start = time()
 start = time()
 
 response = requests.get("https://cdn.simplecss.org/simple.min.css/")
-with open('assets/simple.css', "w", encoding="utf-8") as file:
+with open("assets/simple.css", "w", encoding="utf-8") as file:
     file.write(response.text)
 
 print(f"Downloaded simple.css in {round(time() - start, 3)}s")
@@ -25,9 +25,9 @@ print(f"Downloaded simple.css in {round(time() - start, 3)}s")
 # Clear site/ directory
 start = time()
 
-if os.path.isdir('site'):
+if os.path.isdir("site"):
     try:
-        shutil.rmtree('site')
+        shutil.rmtree("site")
     except OSError as e:
         print(f"Error {e.filename} - {e.filename}.{e.strerror}")
 
@@ -36,7 +36,7 @@ print(f"Cleared site/ directory in {round(time() - start, 3)}s")
 # Copy static assets
 start = time()
 
-shutil.copytree('assets/', 'site/')
+shutil.copytree("assets/", "site/")
 
 print(f"Copied static files in {round(time() - start, 3)}s")
 

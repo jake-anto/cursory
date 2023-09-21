@@ -9,7 +9,7 @@ from PIL import Image
 from languages import LANGS
 
 TODAY = datetime.utcnow().strftime("%Y/%m/%d")
-TODAY_ISO = datetime.utcnow().strftime("%Y-%m-%d")
+TODAY_ISO = datetime.utcnow().strftime("%Y-%m-%d") # ISO 8601 compliant
 API_URL = "https://api.wikimedia.org/"
 HEADERS = {
     "User-Agent": f"CursoryBot/0.0.1 (https://github.com/jake-anto/cursory; cursory@itsjake.me) requests/{requests.__version__}"
@@ -91,13 +91,15 @@ def generate_sitemap(canonical_url: str) -> str:
     """
 
     for lang in LANGS:
-        sitemap += f"""
-        <url>
-            <loc>{canonical_url}{lang}</loc>
-            <lastmod>{TODAY_ISO}</lastmod>
-            <changefreq>daily</changefreq>
-        </url>
-        """
+        # Skip English since the root URL is the English page
+        if lang != 'en':
+            sitemap += f"""
+            <url>
+                <loc>{canonical_url}{lang}</loc>
+                <lastmod>{TODAY_ISO}</lastmod>
+                <changefreq>daily</changefreq>
+            </url>
+            """
 
     sitemap += "</urlset>"
 

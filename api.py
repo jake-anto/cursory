@@ -6,6 +6,8 @@ from typing import Dict
 import requests
 from PIL import Image
 
+from languages import LANGS
+
 TODAY = datetime.utcnow().strftime("%Y/%m/%d")
 API_URL = "https://api.wikimedia.org/"
 HEADERS = {
@@ -60,3 +62,42 @@ def optimize_image(link: str, lang: str) -> str:
     except Exception:
         logging.warning("Could not optimize image. Fallback to original link instead.")
         return link
+
+
+def generate_sitemap(canonical_url: str) -> str:
+    """Generate a sitemap for the given languages.
+
+    Parameters
+    ----------
+    canonical_url : str
+        The canonical URL of the site.
+
+    Returns
+    -------
+    str
+        The sitemap.
+    """
+    sitemap = f"""<?xml version="1.0" encoding="UTF-8"?>
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>{canonical_url}</loc>
+        <lastmod>{datetime.utcnow()}</lastmod>
+        <changefreq>daily</changefreq>
+    </url>
+    <url>
+        <loc>{canonical_url}about</loc>
+    </url>
+    """
+
+    for lang in LANGS:
+        sitemap += f"""
+        <url>
+            <loc>{canonical_url}{lang}</loc>
+            <lastmod>{datetime.utcnow()}</lastmod>
+            <changefreq>daily</changefreq>
+        </url>
+        """
+
+    sitemap += "</urlset></xml>"
+
+    return sitemap

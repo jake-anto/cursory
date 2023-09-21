@@ -4,13 +4,29 @@ import shutil
 from time import time
 
 import requests
+import toml
 
+import api
 import main
 from languages import LANGS
 
 # Begin timer
 build_start = time()
 
+# Load config
+config = toml.load("config.toml")
+
+# Generate sitemap.xml if enabled
+if config["site"]["generate_sitemap"]:
+    start = time()
+
+    with open("assets/sitemap.xml", "w", encoding="utf-8") as file:
+        file.write(api.generate_sitemap(config["site"]["url"]))
+    # Add sitemap to robots.txt
+    with open("assets/robots.txt", "a") as file:
+        file.write(f"\nSitemap: {config['site']['url']}sitemap.xml")
+
+    print(f"Generated sitemap.xml in {round(time() - start, 3)}s")
 
 # Self-host simple.css
 start = time()

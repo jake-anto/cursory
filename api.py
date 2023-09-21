@@ -98,6 +98,6 @@ def generate_sitemap(canonical_url: str) -> str:
         </url>
         """
 
-    sitemap += "</urlset></xml>"
+    sitemap += "</urlset>"
 
     return sitemap

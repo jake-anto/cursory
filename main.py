@@ -26,14 +26,18 @@ def build(lang="en") -> None:
     """Build the HTML file for the given language."""
     featured = api.get_featured(lang=lang)
 
-    doc = dominate.document(title="Cursory", lang=lang)
+    doc = dominate.document(
+        title=f"Cursory - {languages.LANG_NAMES[lang]} edition", lang=lang
+    )
 
     with doc.head:
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         meta(name="charset", content="UTF-8")
         meta(
             name="description",
-            content="A lightweight and minimalistic open-source app that delivers the most essential news from around the globe in 15+ languages. Powered by Wikipedia.",
+            content="A lightweight and minimalistic open-source app that delivers \
+                the most essential news from around the globe in 15+ languages. \
+                Powered by Wikipedia.",
         )
         link(
             rel="stylesheet",

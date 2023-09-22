@@ -168,9 +168,9 @@ def build(
                         src="/512kb_green.svg",
                         alt="512KB Club Green Team",
                         loading="lazy",
+                        cls="badge",
                     ),
                     href="https://512kb.club/",
-                    cls="badge",
                 )
             p(raw("Made with &#10084; by <a href='https://itsjake.me/'>Jake Anto</a>."))
 

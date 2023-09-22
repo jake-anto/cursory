@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime
 
 import dominate
@@ -24,6 +25,8 @@ import languages
 
 def build(lang="en") -> None:
     """Build the HTML file for the given language."""
+    print(f"Building {lang}.html")
+
     featured = api.get_featured(lang=lang)
 
     doc = dominate.document(
@@ -35,9 +38,9 @@ def build(lang="en") -> None:
         meta(name="charset", content="UTF-8")
         meta(
             name="description",
-            content="A lightweight and minimalistic open-source app that delivers \
-                the most essential news from around the globe in 15+ languages. \
-                Powered by Wikipedia.",
+            content="A lightweight and minimalistic open-source app that delivers "
+            "the most essential news from around the globe in 15+ languages. "
+            "Powered by Wikipedia.",
         )
         link(
             rel="stylesheet",
@@ -82,19 +85,25 @@ def build(lang="en") -> None:
                                     alt=f"Image for {story['links'][0]['titles']['normalized']}",
                                 )
                         except KeyError:
-                            pass
+                            logging.warning(
+                                "No image found for a story in %s.html.", lang
+                            )
 
                         # Headline
                         try:
                             h2(story["links"][0]["titles"]["normalized"])
                         except IndexError:
-                            pass
+                            logging.warning(
+                                "No headline found for a story in %s.html.", lang
+                            )
 
                         # Subtitle
                         try:
                             h4(story["links"][0]["description"])
                         except (KeyError, IndexError):
-                            pass
+                            logging.warning(
+                                "No subtitle found for a story in %s.html.", lang
+                            )
 
                         # Article
                         article = story["story"]
@@ -111,7 +120,9 @@ def build(lang="en") -> None:
                                 ],
                             )
                         except (KeyError, IndexError):
-                            pass
+                            logging.warning(
+                                "No article found for a story in %s.html.", lang
+                            )
         else:
             p("There was an error fetching the news. Please try again later.")
 
@@ -127,8 +138,6 @@ def build(lang="en") -> None:
             p(raw("Made with &#10084; by <a href='https://itsjake.me/'>Jake Anto</a>."))
 
     # Create a index.html with the content of the doc
-    print(f"Building {lang}.html")
-
     if lang == "en":
         filename = "site/index.html"
     else:

@@ -2,3 +2,4 @@ dominate
 requests
 pillow
 toml
+minify-html

@@ -2,6 +2,7 @@ import logging
 from datetime import datetime
 
 import dominate
+import minify_html
 from dominate.tags import (
     a,
     div,
@@ -24,7 +25,9 @@ import api
 import languages
 
 
-def build(lang: str = "en", green_club_badge: bool = False) -> None:
+def build(
+    lang: str = "en", green_club_badge: bool = False, minify: bool = True
+) -> None:
     """Build the HTML file for the given language.
 
     Parameters
@@ -177,6 +180,15 @@ def build(lang: str = "en", green_club_badge: bool = False) -> None:
     else:
         filename = f"site/{lang}/index.html"
 
+    output = doc.render()
+
+    # Minify HTML
+    if minify:
+        try:
+            output = minify_html.minify(code=output, do_not_minify_doctype=True)
+        except Exception as e:
+            logging.warning("Failed to minify HTML: %s", e)
+
     # Write the file; use UTF-8
     with open(filename, "w", errors="ignore", encoding="utf-8") as f:
-        f.write(doc.render())
+        f.write(output)

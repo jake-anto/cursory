@@ -15,3 +15,8 @@ generate_sitemap = true
 # Add 512KB Club "Green Team" badge to the footer if your site qualifies
 # See https://512kb.club/faq
 512kb_club_badge = true
+
+[generator]
+
+# Minify the generated HTML and CSS
+minify = true

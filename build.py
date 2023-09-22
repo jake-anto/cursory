@@ -72,7 +72,11 @@ for language in LANGS:
         os.makedirs(os.path.dirname(f"site/{language}/"), exist_ok=True)
 
         # Build HTML file
-        main.build(lang=language, green_club_badge=config["site"]["512kb_club_badge"])
+        main.build(
+            lang=language,
+            green_club_badge=config["site"]["512kb_club_badge"],
+            minify=config["generator"]["minify"],
+        )
 
         print(f"Built {language}.html in {round(time() - start, 3)}s")
     except Exception as e:

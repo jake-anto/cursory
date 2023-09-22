@@ -23,8 +23,21 @@ import api
 import languages
 
 
-def build(lang="en") -> None:
-    """Build the HTML file for the given language."""
+def build(lang: str = "en", green_club_badge: bool = False) -> None:
+    """Build the HTML file for the given language.
+
+    Parameters
+    ----------
+    lang : str
+        The language code to build the HTML file for.
+    green_club_badge : bool
+        Whether or not to show the 512KB Green Club badge.
+
+    Returns
+    -------
+    None
+        Just builds the HTML file.
+    """
     print(f"Building {lang}.html")
 
     featured = api.get_featured(lang=lang)
@@ -135,6 +148,16 @@ def build(lang="en") -> None:
                     + f"Build time: {datetime.utcnow()} UTC."
                 )
             )
+            if green_club_badge:
+                a(
+                    img(
+                        src="/512kb_green.svg",
+                        alt="512KB Club Green Team",
+                        loading="lazy",
+                    ),
+                    href="https://512kb.club/",
+                    cls="badge",
+                )
             p(raw("Made with &#10084; by <a href='https://itsjake.me/'>Jake Anto</a>."))
 
     # Create a index.html with the content of the doc

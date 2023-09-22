@@ -1,3 +1,13 @@
 [site]
+
+# The canonical URL for your site, WITH a trailing slash
 url = "https://news.itsjake.me/"
+
+# Content of robots.txt
+robots_txt = """
+User-agent: *
+Disallow: 
+Disallow: /cgi-bin/"""
+
+# Enable sitemap.xml generation. It will be added to robots.txt.
 generate_sitemap = true

@@ -19,4 +19,4 @@ generate_sitemap = true
 [generator]
 
 # Minify the generated HTML and CSS
-minify = true
+minify = false

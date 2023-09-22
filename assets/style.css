@@ -14,8 +14,20 @@ h4 {
     margin: 10px;
 }
 
-footer .button {
+.button {
     margin: 0 5px;
+}
+
+header .button {
+    font-size: small;
+    margin: 3px;
+    background: none;
+    color: var(--accent);
+}
+
+.lang-selector-nojs {
+    overflow-x: auto;
+    white-space: nowrap;
 }
 
 .badge {

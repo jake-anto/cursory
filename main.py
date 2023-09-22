@@ -18,6 +18,7 @@ from dominate.tags import (
     option,
     p,
     select,
+    style,
 )
 from dominate.util import raw
 
@@ -72,7 +73,10 @@ def build(
             h1("Cursory")
             p("A cursory glance at current events.")
             # Language selector
-            with select(onchange="location = this.value;", aria_label="Language"):
+            with select(
+                onchange="location = this.value;",
+                aria_label="Language",
+            ):
                 # English redirects to index.html rather than en.html
                 option("🇺🇸 English", value="/")
                 for language in languages.LANGS:
@@ -82,16 +86,22 @@ def build(
                             value=f"/{language}",
                             selected=language == lang,
                         )
+
             with noscript():
-                for language in languages.LANGS:
-                    if language != "en":
-                        a(
-                            languages.LANG_NAMES[language],
-                            href=f"/{language}",
-                            cls="button lang-button",
-                        )
-                    else:
-                        a("🇺🇸 English", href="/", cls="button")
+                # Hide the language selector if JavaScript is disabled
+                style("select { display: none; }")
+
+                # Language selector for browsers without JavaScript
+                with div(cls="lang-selector-nojs"):
+                    for language in languages.LANGS:
+                        if language != "en":
+                            a(
+                                languages.LANG_NAMES[language],
+                                href=f"/{language}",
+                                cls="button",
+                            )
+                        else:
+                            a("🇺🇸 English", href="/", cls="button")
 
         if featured is not None:
             with div():
@@ -185,6 +195,7 @@ def build(
     # Minify HTML
     if minify:
         try:
+            # pylint: disable=no-member; minify_html is a valid module
             output = minify_html.minify(code=output, do_not_minify_doctype=True)
         except Exception as e:
             logging.warning("Failed to minify HTML: %s", e)

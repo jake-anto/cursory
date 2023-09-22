@@ -13,6 +13,7 @@ from dominate.tags import (
     img,
     link,
     meta,
+    noscript,
     option,
     p,
     select,
@@ -78,6 +79,16 @@ def build(lang: str = "en", green_club_badge: bool = False) -> None:
                             value=f"/{language}",
                             selected=language == lang,
                         )
+            with noscript():
+                for language in languages.LANGS:
+                    if language != "en":
+                        a(
+                            languages.LANG_NAMES[language],
+                            href=f"/{language}",
+                            cls="button lang-button",
+                        )
+                    else:
+                        a("🇺🇸 English", href="/", cls="button")
 
         if featured is not None:
             with div():

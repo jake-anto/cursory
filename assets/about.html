@@ -2,21 +2,23 @@
 <html lang="en">
 
 <head>
-    <title>Cursory</title>
+    <title>Cursory - About</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="UTF-8" name="charset">
     <meta
-        content="Cursory: a sleek and speedy app that delivers the most essential news from around the globe in 15+ languages. It's powered by Wikipedia and is open-source."
+        content="A lightweight and minimalistic open-source app that delivers the most essential news from around the globe in 15+ languages. Powered by Wikipedia."
         name="description">
-    <link href="https://cdn.simplecss.org/simple.min.css" rel="stylesheet">
+    <link href="/simple.css" rel="stylesheet">
     <link href="/style.css" rel="stylesheet">
+    <link href="/favicon-32.png" rel="icon" sizes="32x32" type="image/png">
+    <link href="/favicon-16.png" rel="icon" sizes="16x16" type="image/png">
 </head>
 
 <body>
     <header>
         <h1>Cursory</h1>
         <p>A cursory glance at current events.</p>
-        <select onchange="location = this.value;" aria-label="Language">
+        <select aria-label="Language" onchange="location = this.value;">
             <option value="/">🇺🇸 English</option>
             <option value="/bs">🇧🇦 Bosanski</option>
             <option value="/da">🇩🇰 Dansk</option>
@@ -35,16 +37,50 @@
             <option value="/sv">🇸🇪 Svenska</option>
             <option value="/vi">🇻🇳 Tiếng Việt</option>
         </select>
+        <noscript>
+            <style>
+                select {
+                    display: none;
+                }
+            </style>
+            <div class="lang-selector-nojs">
+                <a class="button" href="/bs">🇧🇦 Bosanski</a>
+                <a class="button" href="/da">🇩🇰 Dansk</a>
+                <a class="button" href="/de">🇩🇪 Deutsch</a>
+                <a class="button" href="/el">🇬🇷 Ελληνικά</a>
+                <a class="button" href="/">🇺🇸 English</a>
+                <a class="button" href="/es">🇪🇸 Español</a>
+                <a class="button" href="/fi">🇫🇮 Suomi</a>
+                <a class="button" href="/fr">🇫🇷 Français</a>
+                <a class="button" href="/he">🇮🇱 עברית</a>
+                <a class="button" href="/ko">🇰🇷 한국어</a>
+                <a class="button" href="/no">🇳🇴 Norsk</a>
+                <a class="button" href="/pl">🇵🇱 Polski</a>
+                <a class="button" href="/pt">🇵🇹 Português</a>
+                <a class="button" href="/ru">🇷🇺 Русский</a>
+                <a class="button" href="/sco">🏴󠁧󠁢󠁳󠁣󠁴󠁿 Scots</a>
+                <a class="button" href="/sv">🇸🇪 Svenska</a>
+                <a class="button" href="/vi">🇻🇳 Tiếng Việt</a>
+            </div>
+        </noscript>
     </header>
-    <div>
-        <h1>About</h1>
+    <h2>About</h2>
         <p>Cursory is an open-source minimalistic news reader that you can use to read the most essential news from
-            around the globe in 15+ languages. It is powered by Wikipedia.</p>
-    </div>
+            around the globe in 15+ languages. It's powered by Wikipedia.</p>
+        <h3>✨ Features</h3>
+        <h4>🔒 Privacy-first</h4>
+        <p>This website doesn't use ads, trackers, cookies, and analytics. We don't want your data.</p>
+        <h4>🚀 Lightning fast</h4>
+        <p>Page size is usually under 100KiB (including images!), check for yourself.</p>
+        <h4>🌍 Supports 15+ languages</h4>
+        <p>All thanks to Wikipedia.</p>
     <footer>
         <a class="button" href="https://github.com/jake-anto/cursory">Source Code</a>
         <a class="button" href="/about">About</a>
-        <p>Made with &#10084; by <a href="https://itsjake.me/">Jake Anto</a>.</p>
+        <a href="https://512kb.club/">
+            <img alt="512KB Club Green Team" class="badge" loading="lazy" src="/512kb_green.svg">
+        </a>
+        <p>Made with &#10084; by <a href='https://itsjake.me/'>Jake Anto</a>.</p>
     </footer>
 </body>
 

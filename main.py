@@ -169,7 +169,7 @@ def build(
             p(
                 raw(
                     "<b>This page uses text from Wikipedia, which is released under "
-                    "<a href='/wp_license.txt'>CC-BY-SA 4.0</a>.</b>"
+                    "<a href='/wp_license.txt'>CC-BY-SA 4.0</a>.</b><br>"
                     + f"Build time: {datetime.utcnow()} UTC."
                 )
             )

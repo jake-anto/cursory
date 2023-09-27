@@ -3,3 +3,4 @@ requests
 pillow
 toml
 minify-html
+beautifulsoup4

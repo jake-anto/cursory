@@ -4,6 +4,7 @@ from datetime import datetime
 from typing import Dict
 
 import requests
+import bs4
 from PIL import Image
 
 from languages import LANGS
@@ -14,9 +15,44 @@ API_URL = "https://api.wikimedia.org/"
 HEADERS = {
     "User-Agent": f"CursoryBot/0.0.1 (https://github.com/jake-anto/cursory; cursory@itsjake.me) requests/{requests.__version__}"
 }
+def get_page_description(title: str, lang: str = "en") -> str:
+    """Get the page description for the given language.
 
+    Parameters
+    ----------
+    lang : str, optional
+        The language to get the page description for, by default 'en'
+    title : str
+        The title of the page to get the description for.
 
-def get_featured(lang="en") -> Dict:
+    Returns
+    -------
+    str
+        The page description.
+    """
+    response = requests.get(
+        API_URL + f"core/v1/wikipedia/{lang}/page/{title}/description", headers=HEADERS
+    )
+    if response.status_code == 200:
+        return response.json()["description"]
+    return ""
+
+def create_story(story: str, lang: str = 'en'):
+    soup = bs4.BeautifulSoup(story, features="html.parser")
+
+    for link in soup.find_all('a'):
+        link["class"] = "tooltip"
+        description = get_page_description(link.get('href')[2:], lang)
+
+        if description != "":
+            span = soup.new_tag("span")
+            span["class"] = "tooltip-text"
+            span.string = description
+            link.append(span)
+
+    return str(soup).replace('./', f"https://{lang}.wikipedia.org/wiki/")
+
+def get_featured(lang: str ="en") -> Dict:
     """Get the featured content for today from the Wikimedia API.
 
     Parameters

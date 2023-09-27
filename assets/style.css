@@ -42,3 +42,25 @@ header .button {
         width: auto;
     }
 }
+
+.tooltip {
+    position: relative;
+}
+
+.tooltip .tooltip-text {
+    visibility: hidden;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    font-size: small;
+    font-weight: normal;
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    background-color: #2b2b2b;
+}
+
+.tooltip:hover .tooltip-text {
+    visibility: visible;
+}

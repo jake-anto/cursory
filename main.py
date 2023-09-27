@@ -143,10 +143,8 @@ def build(
                             )
 
                         # Article
-                        article = story["story"]
-                        article = article.replace(
-                            '"./', '"https://' + lang + ".wikipedia.org/wiki/"
-                        )
+                        article = api.create_story(story["story"], lang)
+
                         p(raw(article))
                         try:
                             p(raw(story["links"][0]["extract_html"]))

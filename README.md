@@ -21,7 +21,7 @@ Supports many languages including English, Spanish, French, Russian, Korean, and
 
 ## Build
 
-Make sure Python 3.7+ is installed.
+Make sure Python 3.8+ is installed.
 
 ### Install dependencies
 

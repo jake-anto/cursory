@@ -27,23 +27,33 @@ import languages
 
 
 def build(
-    lang: str = "en", green_club_badge: bool = False, minify: bool = True
+    page_type: str = "news",
+    lang: str = "en",
+    green_club_badge: bool = False,
+    minify: bool = True,
 ) -> None:
     """Build the HTML file for the given language.
 
     Parameters
     ----------
+    page_type : str
+        The type of page to build. Can be "news", "about" or "404".
     lang : str
         The language code to build the HTML file for.
     green_club_badge : bool
         Whether or not to show the 512KB Green Club badge.
+    minify : bool
+        Whether or not to minify the HTML file.
 
     Returns
     -------
     None
         Just builds the HTML file.
     """
-    print(f"Building {lang}.html")
+    if page_type == "news":
+        print(f"Building {lang}.html")
+    else:
+        print(f"Building {page_type}.html")
 
     featured = api.get_featured(lang=lang)
 
@@ -103,65 +113,92 @@ def build(
                         else:
                             a("🇺🇸 English", href="/", cls="button")
 
-        if featured is not None:
-            with div():
-                for story in featured["news"]:
-                    with div(cls="story"):
-                        # Image
-                        try:
-                            with a(
-                                href=api.optimize_image(
-                                    story["links"][0]["originalimage"]["source"], lang
+        if page_type == "news":
+            if featured is not None:
+                with div():
+                    for story in featured["news"]:
+                        with div(cls="story"):
+                            # Image
+                            try:
+                                with a(
+                                    href=api.optimize_image(
+                                        story["links"][0]["originalimage"]["source"],
+                                        lang,
+                                    )
+                                ):
+                                    img(
+                                        src=api.optimize_image(
+                                            story["links"][0]["thumbnail"]["source"],
+                                            lang,
+                                        ),
+                                        cls="image",
+                                        alt=f"Image for {story['links'][0]['titles']['normalized']}",
+                                    )
+                            except KeyError:
+                                logging.warning(
+                                    "No image found for a story in %s.html.", lang
                                 )
-                            ):
-                                img(
-                                    src=api.optimize_image(
-                                        story["links"][0]["thumbnail"]["source"], lang
-                                    ),
-                                    cls="image",
-                                    alt=f"Image for {story['links'][0]['titles']['normalized']}",
+
+                            # Headline
+                            try:
+                                h2(story["links"][0]["titles"]["normalized"])
+                            except IndexError:
+                                logging.warning(
+                                    "No headline found for a story in %s.html.", lang
                                 )
-                        except KeyError:
-                            logging.warning(
-                                "No image found for a story in %s.html.", lang
-                            )
 
-                        # Headline
-                        try:
-                            h2(story["links"][0]["titles"]["normalized"])
-                        except IndexError:
-                            logging.warning(
-                                "No headline found for a story in %s.html.", lang
-                            )
+                            # Subtitle
+                            try:
+                                h4(story["links"][0]["description"])
+                            except (KeyError, IndexError):
+                                logging.warning(
+                                    "No subtitle found for a story in %s.html.", lang
+                                )
 
-                        # Subtitle
-                        try:
-                            h4(story["links"][0]["description"])
-                        except (KeyError, IndexError):
-                            logging.warning(
-                                "No subtitle found for a story in %s.html.", lang
+                            # Article
+                            article = story["story"]
+                            article = article.replace(
+                                '"./', '"https://' + lang + ".wikipedia.org/wiki/"
                             )
+                            p(raw(article))
+                            try:
+                                p(raw(story["links"][0]["extract_html"]))
+                                a(
+                                    "Continue reading...",
+                                    href=story["links"][0]["content_urls"]["desktop"][
+                                        "page"
+                                    ],
+                                )
+                            except (KeyError, IndexError):
+                                logging.warning(
+                                    "No article found for a story in %s.html.", lang
+                                )
+            else:
+                p("There was an error fetching the news. Please try again later.")
 
-                        # Article
-                        article = story["story"]
-                        article = article.replace(
-                            '"./', '"https://' + lang + ".wikipedia.org/wiki/"
-                        )
-                        p(raw(article))
-                        try:
-                            p(raw(story["links"][0]["extract_html"]))
-                            a(
-                                "Continue reading...",
-                                href=story["links"][0]["content_urls"]["desktop"][
-                                    "page"
-                                ],
-                            )
-                        except (KeyError, IndexError):
-                            logging.warning(
-                                "No article found for a story in %s.html.", lang
-                            )
-        else:
-            p("There was an error fetching the news. Please try again later.")
+        elif page_type == "about":
+            h2("About")
+            raw(
+                """<p>Cursory is an open-source minimalistic news reader that you can \
+                use to read the most essential news from around the globe in 15+ \
+                languages. It's powered by Wikipedia.</p>
+                <h3>✨ Features</h3>
+                <h4>🔒 Privacy-first</h4>
+                <p>This website doesn't use ads, trackers, cookies, and analytics. We \
+                don't want your data.</p>
+                <h4>🚀 Lightning fast</h4>
+                <p>Page size is usually under 100KiB (including images!), check for \
+                yourself.</p>
+                <h4>🌍 Supports 15+ languages</h4>
+                <p>All thanks to Wikipedia.</p>"""
+            )
+
+        elif page_type == "404":
+            h2("404 - Not Found")
+            p(
+                "This site is under active development. Try changing languages or "
+                "check back later."
+            )
 
         with footer():
             a("Source Code", cls="button", href="https://github.com/jake-anto/cursory")
@@ -186,10 +223,15 @@ def build(
             p(raw("Made with &#10084; by <a href='https://itsjake.me/'>Jake Anto</a>."))
 
     # Create a index.html with the content of the doc
-    if lang == "en":
-        filename = "site/index.html"
-    else:
-        filename = f"site/{lang}/index.html"
+    if page_type == "news":
+        if lang == "en":
+            filename = "site/index.html"
+        else:
+            filename = f"site/{lang}/index.html"
+    elif page_type == "about":
+        filename = "site/about.html"
+    elif page_type == "404":
+        filename = "site/404.html"
 
     output = doc.render()
 

@@ -82,4 +82,27 @@ for language in LANGS:
     except Exception as e:
         logging.warning("Skipped %s.html because Exception: %s", language, e)
 
+# Build about page
+start = time()
+
+main.build(
+    page_type="about",
+    green_club_badge=config["site"]["512kb_club_badge"],
+    minify=config["generator"]["minify"],
+)
+
+print(f"Built about.html in {round(time() - start, 3)}s")
+
+# Build 404 page
+start = time()
+
+main.build(
+    page_type="404",
+    green_club_badge=config["site"]["512kb_club_badge"],
+    minify=config["generator"]["minify"],
+)
+
+print(f"Built 404.html in {round(time() - start, 3)}s")
+
+
 print(f"Build completed in {round(time() - build_start, 3)}")

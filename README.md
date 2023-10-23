@@ -13,11 +13,15 @@ No tracking, no ads, no cookies, no analytics, no third-party requests.
 
 ### 🚀 Lightning fast
 
-Page size is usually under 100 KiB (images included).
+Page size is usually under 100 KiB (including images!). This is accomplished by converting images to a modern format.
 
 ### 🌍 Supports 15+ languages
 
 Supports many languages including English, Spanish, French, Russian, Korean, and more.
+
+### ⏳ Stay up-to-date
+
+Cursory is rebuilt every three hours with the latest news.
 
 ## Build
 

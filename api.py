@@ -9,7 +9,7 @@ from PIL import Image
 from languages import LANGS
 
 TODAY = datetime.utcnow().strftime("%Y/%m/%d")
-TODAY_ISO = datetime.utcnow().strftime("%Y-%m-%d") # ISO 8601 compliant
+TODAY_ISO = datetime.utcnow().strftime("%Y-%m-%d")  # ISO 8601 compliant
 API_URL = "https://api.wikimedia.org/"
 HEADERS = {
     "User-Agent": f"CursoryBot/0.0.1 (https://github.com/jake-anto/cursory; cursory@itsjake.me) requests/{requests.__version__}"
@@ -78,29 +78,37 @@ def generate_sitemap(canonical_url: str) -> str:
     str
         The sitemap.
     """
-    sitemap = f"""<?xml version="1.0" encoding="UTF-8"?>
-    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    <url>
-        <loc>{canonical_url}</loc>
-        <lastmod>{TODAY_ISO}</lastmod>
-        <changefreq>daily</changefreq>
-    </url>
-    <url>
-        <loc>{canonical_url}about</loc>
-    </url>
+    sitemap = """<?xml version="1.0" encoding="UTF-8"?>
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml">
     """
 
     for lang in LANGS:
-        # Skip English since the root URL is the English page
-        if lang != 'en':
-            sitemap += f"""
-            <url>
-                <loc>{canonical_url}{lang}</loc>
-                <lastmod>{TODAY_ISO}</lastmod>
-                <changefreq>daily</changefreq>
-            </url>
-            """
+        # Add the homepage for each language
+        # If the language is English, the homepage is just canonical_url
+        sitemap += f"""
+       <url>
+            <loc>{canonical_url}{lang if lang != 'en' else ''}</loc>
+            <lastmod>{TODAY_ISO}</lastmod>
+            <changefreq>daily</changefreq>
+        """
 
-    sitemap += "</urlset>"
+        # Add alternate links for each language
+        # https://developers.google.com/search/docs/specialty/international/localized-versions#sitemap
+        for lang in LANGS:
+            sitemap += f"""
+            <xhtml:link
+                rel="alternate"
+                hreflang="{lang}"
+                href="{canonical_url}{lang if lang != 'en' else ''}"
+            />
+            """
+        sitemap += "</url>"
+
+    sitemap += f"""\n<url>
+        <loc>{canonical_url}about</loc>
+    </url>"""
+
+    sitemap += "\n</urlset>"
 
     return sitemap

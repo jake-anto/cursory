@@ -179,18 +179,28 @@ def build(
         elif page_type == "about":
             h2("About")
             raw(
-                """<p>Cursory is an open-source minimalistic news reader that you can \
-                use to read the most essential news from around the globe in 15+ \
-                languages. It's powered by Wikipedia.</p>
+                """
+                <p>Cursory is an open-source minimalistic news reader that you can 
+                use to read the most essential news from around the globe in 15+ 
+                languages. It's powered by Wikipedia.
+                </p>
+                <p class="notice">Under active development. Expect bugs and breaking changes.</p>
                 <h3>✨ Features</h3>
-                <h4>🔒 Privacy-first</h4>
-                <p>This website doesn't use ads, trackers, cookies, and analytics. We \
-                don't want your data.</p>
-                <h4>🚀 Lightning fast</h4>
-                <p>Page size is usually under 100KiB (including images!), check for \
-                yourself.</p>
-                <h4>🌍 Supports 15+ languages</h4>
-                <p>All thanks to Wikipedia.</p>"""
+                <ul>
+                    <li>
+                        <b>🔒 Privacy-first:</b> This website doesn't use ads, trackers, cookies, and analytics. We don't want your data.
+                    </li>
+                    <li>
+                        <b>🚀 Lightning fast:</b> Page size is usually under 100KiB (including images!), check for yourself.
+                    </li>
+                    <li>
+                        <b>🌍 Supports 15+ languages:</b> All thanks to Wikipedia.
+                    </li>
+                    <li>
+                        <b>⏳ Stay up-to-date:</b> Cursory is rebuilt every few hours with the latest news.
+                    </li>
+                </ul>
+                """
             )
 
         elif page_type == "404":

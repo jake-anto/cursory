@@ -88,7 +88,7 @@ def generate_sitemap(canonical_url: str) -> str:
         # If the language is English, the homepage is just canonical_url
         sitemap += f"""
        <url>
-            <loc>{canonical_url}{lang if lang != 'en' else ''}</loc>
+            <loc>{canonical_url}{f'{lang}/' if lang != 'en' else ''}</loc>
             <lastmod>{TODAY_ISO}</lastmod>
             <changefreq>daily</changefreq>
         """
@@ -100,7 +100,7 @@ def generate_sitemap(canonical_url: str) -> str:
             <xhtml:link
                 rel="alternate"
                 hreflang="{lang}"
-                href="{canonical_url}{lang if lang != 'en' else ''}"
+                href="{canonical_url}{f'{lang}/' if lang != 'en' else ''}"
             />
             """
         sitemap += "</url>"
